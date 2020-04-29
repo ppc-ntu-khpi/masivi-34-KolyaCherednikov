@@ -5,31 +5,26 @@ import java.util.Random;
 public class Exercise {
     public static String Calculate(byte N, byte M){
         byte[][] arr = new byte[N][M];
-        byte[][] arrend = new byte[N][M+1];
         byte num = 0;
         Random random = new Random();
         String s = "";
-        for(byte i = 0; i < N; i++)
-            for(byte y = 0; y < M; y++)
-                arr[i][y] = (byte) random.nextInt(5);
-        for(byte i = 0; i < N; i++)
-            for(byte y = 0; y < M; y++)
-                arrend[i][y] = arr[i][y];
+        for(byte[] row:arr)
+            Arrays.fill(row, (byte) (random.nextInt(10)+1));
         for(byte[] row:arr)
             System.out.println(Arrays.toString(row));
-        for(byte i = 0; i < N; i++){
-            for(byte y = 0; y < M+1; y++)
-                if(y==M){
-                    arrend[i][y] = num;
-                    num = 0;
-                }
-                else
-                    num += arrend[i][y];
+        System.out.println();
+        byte[][] arrend = new byte[N][M+1];
+        byte i = 0;
+        for(byte[] row:arr){
+            arrend[i] = Arrays.copyOf(row,M+1);
+            i++;
         }
-        for(byte[] row:arrend)
-            s += Arrays.toString(row)+"\n";
+        for(i = 0; i < N; i++)
+            arrend[i][M] = (byte) (arrend[i][M-1]*M);
+        
+        for(byte[] rowend:arrend){
+            s += Arrays.toString(rowend) + "\n";
+        }
         return s;
     }
-    
-    
 }
